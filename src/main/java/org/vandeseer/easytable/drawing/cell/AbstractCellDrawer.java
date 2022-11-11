@@ -29,9 +29,9 @@ public abstract class AbstractCellDrawer<T extends AbstractCell> implements Draw
             final Point2D.Float start = drawingContext.getStartingPoint();
 
             final float rowHeight = cell.getRow().getHeight();
-            final float height = Math.max(cell.getHeight(), rowHeight);
-            final float y = rowHeight < cell.getHeight()
-                    ? start.y + rowHeight - cell.getHeight()
+            final float height = Math.max(cell.getHeight(start.y), rowHeight);
+            final float y = rowHeight < cell.getHeight(start.y)
+                    ? start.y + rowHeight - cell.getHeight(start.y)
                     : start.y;
 
             DrawingUtil.drawRectangle(contentStream,
@@ -58,9 +58,9 @@ public abstract class AbstractCellDrawer<T extends AbstractCell> implements Draw
         final float cellWidth = cell.getWidth();
 
         final float rowHeight = cell.getRow().getHeight();
-        final float height = Math.max(cell.getHeight(), rowHeight);
-        final float sY = rowHeight < cell.getHeight()
-                ? start.y + rowHeight - cell.getHeight()
+        final float height = Math.max(cell.getHeight(start.y), rowHeight);
+        final float sY = rowHeight < cell.getHeight(start.y)
+                ? start.y + rowHeight - cell.getHeight(start.y)
                 : start.y;
 
         // Handle the cell's borders

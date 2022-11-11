@@ -7,5 +7,4 @@ public interface Drawer {
     void drawBackground(DrawingContext drawingContext);
 
     void drawBorders(DrawingContext drawingContext);
-
 }

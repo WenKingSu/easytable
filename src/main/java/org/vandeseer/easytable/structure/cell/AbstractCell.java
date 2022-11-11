@@ -13,6 +13,7 @@ import org.vandeseer.easytable.settings.Settings;
 import org.vandeseer.easytable.settings.VerticalAlignment;
 import org.vandeseer.easytable.structure.Column;
 import org.vandeseer.easytable.structure.Row;
+import org.vandeseer.easytable.structure.Table;
 import org.vandeseer.easytable.structure.TableNotYetBuiltException;
 
 import java.awt.*;
@@ -164,6 +165,15 @@ public abstract class AbstractCell {
                 : getMinHeight();
     }
 
+    public float getHeight(float startY) {
+        assertIsRendered();
+
+        return getRowSpan() > 1
+                ? calculateHeightForRowSpan(startY)
+                : getMinHeight();
+    }
+
+
     public Drawer getDrawer() {
         return this.drawer != null
                 ? this.drawer.withCell(this)
@@ -177,6 +187,22 @@ public abstract class AbstractCell {
 
         float result = currentRow.getHeight();
         for (int i = 1; i < getRowSpan(); i++) {
+            result += currentRow.getNext().getHeight();
+            currentRow = currentRow.getNext();
+        }
+
+        return result;
+    }
+
+    public float calculateHeightForRowSpan(float startY) {
+        Row currentRow = row;
+        Table table = currentRow.getTable();
+
+        float result = currentRow.getHeight();
+        for (int i = 1; i < getRowSpan(); i++) {
+            if ( startY - (result + currentRow.getNext().getHeight()) <= 0 ){
+                return result;
+            }
             result += currentRow.getNext().getHeight();
             currentRow = currentRow.getNext();
         }

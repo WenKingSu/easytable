@@ -26,7 +26,7 @@ public class RepeatedHeaderTableDrawer extends TableDrawer {
 				adaption += table.getRows().get(i).getHeight();
 				Point2D.Float startPoint = new Point2D.Float(this.startX,
 						this.startY + calculateHeightForFirstRows() - adaption);
-				drawRow(startPoint, table.getRows().get(i), i, (drawer, drawingContext) -> {
+				drawRow(pageData, startPoint, table.getRows().get(i), i, (drawer, drawingContext) -> {
 					drawer.drawBackground(drawingContext);
 					drawer.drawContent(drawingContext);
 					drawer.drawBorders(drawingContext);
